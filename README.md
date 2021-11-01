@@ -16,7 +16,7 @@ To use CRF refinement, you will need to mannually install [pydensecrf](https://g
 
 ### run inference
 
-* download the checkpoint from [TBA]().
+* download the checkpoint from [here](https://github.com/rayleizhu/FDRNet/releases/tag/checkpoint).
 * specify data_root, and run `python test.py`. 
 * run `python crf_refine.py`.
 * check the results w/ and w/o CRF refinement in `test/raw` and `test/crf` respectively
@@ -30,7 +30,7 @@ BER scores are specified below.
 |w/o CRF| 3.27 | 7.42 | 1.53 |
 |w/ CRF| 3.04 | 7.28 | 1.55 |
 
-You can access qualitative reseults [TBA]().
+You can access qualitative reseults from [BaiduNetDisk (passcode:4j3i)](https://pan.baidu.com/s/1yCU1dyQrQiQnrbkznccO5Q).
 
 
 
