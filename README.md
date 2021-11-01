@@ -1,6 +1,8 @@
 # FDRNet
 Code for our ICCV 2021 paper "[Mitigating Intensity Bias in Shadow Detection via Feature Decomposition and Reweighting](https://openaccess.thecvf.com/content/ICCV2021/html/Zhu_Mitigating_Intensity_Bias_in_Shadow_Detection_via_Feature_Decomposition_and_ICCV_2021_paper.html)"
 
+![pipeline](assets/pipeline.png)
+
 
 ## How to Use
 

@@ -6,8 +6,11 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 import os
 
-ckpt_path = 'ckpt/epoch_010.pt'
+# ckpt_path = 'ckpt/istd_epoch_010.pt'
+ckpt_path = 'ckpt/sbu_epoch_010.pt'
 data_root = '/home/lzhu68/hd2t/Dataset/SBU-shadow/SBU-Test'
+# data_root = '/home/lzhu68/hd2t/Dataset/UCF/GouSplit'
+# data_root = '/home/lzhu68/hd2t/Dataset/ISTD_Dataset/sbu_struct/test'
 save_dir = 'test/raw'
 
 os.makedirs(save_dir, exist_ok=True)
