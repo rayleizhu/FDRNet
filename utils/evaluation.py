@@ -1,3 +1,4 @@
+import torch
 import numpy as np
 from collections import OrderedDict
 import pandas as pd
@@ -105,4 +106,76 @@ def crf_refine(img, annos):
     res = res.reshape(img.shape[:2])
     return res.astype('uint8')
 
-    
+
+
+
+###############################################
+
+class AverageMeter(object):
+    """Computes and stores the average and current value"""
+    def __init__(self):
+        self.sum = 0
+        self.count = 0
+
+    def update(self, val, weight=1):
+        self.sum += val * weight
+        self.count += weight
+
+    def average(self):
+        if self.count == 0:
+            return 0
+        else:
+            return self.sum / self.count
+
+    def clear(self):
+        self.sum = 0
+        self.count = 0
+
+def compute_cm_torch(y_pred, y_label, n_class):
+    mask = (y_label >= 0) & (y_label < n_class)
+    hist = torch.bincount(n_class * y_label[mask] + y_pred[mask],
+                          minlength=n_class**2).reshape(n_class, n_class)
+    return hist
+
+class MyConfuseMatrixMeter(AverageMeter):
+    """More Clear Confusion Matrix Meter"""
+    def __init__(self, n_class):
+        super(MyConfuseMatrixMeter, self).__init__()
+        self.n_class = n_class
+
+    def update_cm(self, y_pred, y_label, weight=1):
+        y_label = y_label.type(torch.int64)
+        val = compute_cm_torch(y_pred=y_pred.flatten(), y_label=y_label.flatten(),
+                               n_class=self.n_class)
+        self.update(val, weight)
+
+    # def get_scores_binary(self):
+    #     assert self.n_class == 2, "this function can only be called for binary calssification problem"
+    #     tn, fp, fn, tp = self.sum.flatten()
+    #     eps = torch.finfo(torch.float32).eps
+    #     precision = tp / (tp + fp + eps)
+    #     recall = tp / (tp + fn + eps)
+    #     f1 = 2*recall*precision / (recall + precision + eps)
+    #     iou = tp / (tp + fn + fp + eps)
+    #     oa = (tp + tn) / (tp + tn + fn + fp + eps)
+    #     score_dict = {}
+    #     score_dict['precision'] = precision.item()
+    #     score_dict['recall'] = recall.item()
+    #     score_dict['f1'] = f1.item()
+    #     score_dict['iou'] = iou.item()
+    #     score_dict['oa'] = oa.item()
+    #     return score_dict
+    def get_scores_binary(self):
+        assert self.n_class == 2, "this function can only be called for binary calssification problem"
+        tn, fp, fn, tp = self.sum.flatten()
+        eps = torch.finfo(torch.float32).eps
+        pos_err = (1 - tp / (tp + fn + eps)) * 100
+        neg_err = (1 - tn / (tn + fp + eps)) * 100
+        ber = (pos_err + neg_err) / 2
+        acc = (tn + tp) / (tn + tp + fn + fp + eps)
+        score_dict = {}
+        score_dict['pos_err'] = pos_err
+        score_dict['neg_err'] = neg_err
+        score_dict['ber'] = ber
+        score_dict['acc'] = acc
+        return score_dict

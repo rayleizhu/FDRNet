@@ -3,3 +3,4 @@ test/
 *.pyc
 *.pt
 results*
+local_*

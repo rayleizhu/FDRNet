@@ -235,5 +235,6 @@ class FDRNet(nn.Module):
                 logits = F.interpolate(self.pred_conv(mix_feat), size=(h, w), mode='bilinear')
             else:
                 logits = F.interpolate(self.pred_conv(mix_feat), size=(h, w), mode='bilinear')
-            return logits
+            return {'logit': logits}
+
 

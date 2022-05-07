@@ -47,7 +47,7 @@ with torch.no_grad():
         im_name = data['im_name'][0]
         save_path = os.path.join(save_dir, im_name)
         gt = data['gt'][0]
-        pred = torch.sigmoid(model(im).cpu())[0]
+        pred = torch.sigmoid(model(im)['logit'].cpu())[0]
         imgrid = torchvision.utils.save_image([im.cpu()[0], pred.expand_as(im[0]), gt.expand_as(im[0])], fp=save_path, nrow=3, padding=0)
 
 
