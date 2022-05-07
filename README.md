@@ -35,6 +35,11 @@ BER scores are specified below.
 You can access qualitative reseults from [BaiduNetDisk (passcode:4j3i)](https://pan.baidu.com/s/1yCU1dyQrQiQnrbkznccO5Q).
 
 
+## TODOs
+
+- [ ] move the logic of brightness shift to the dataset class; rewrite dataset class.
+- [ ] remove feature extraction hook, use [segmentation_models.pytorch](https://github.com/qubvel/segmentation_models.pytorch) encoder instead.
+- [ ] use [timm](https://github.com/rwightman/pytorch-image-models)'s register_model decorator
 
 
 
