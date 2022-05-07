@@ -143,37 +143,7 @@ def create_loss_function(args):
     return loss_function
 
 
-# def get_datasets(name, root, split, transform):
-#     if name == 'LEVIRCDPlus':
-#         return torchgeo.datasets.LEVIRCDPlus(root=root, split=split, transforms=transform, download=False, checksum=False)
-#     elif name == 'LEVIRCD':
-#         return LEVIRCD(root=root, split=split, transforms=transform)
-#     elif name == 'SECOND':
-#         return SECOND(root=root, split=split, transforms=transform)
-#     else:
-#         raise ValueError(f'unsupported dataset {name}')
-
-
 def create_dataloaders(args):
-    # if args.aug == 'legacy':
-    #     train_tf = StdAug(training=True, img_size=args.train_size, to_tensor=True)
-    #     val_tf = StdAug(training=False, img_size=args.eval_size, to_tensor=True)
-    # elif args.aug.startswith('strong') or args.aug.startswith('std'):
-    #     train_tf = MyAug(training=True, size=args.train_size, im_aug=args.aug)
-    #     val_tf = MyAug(training=False, size=args.eval_size, im_aug=args.aug)
-    # elif args.aug.startswith('augv2'): # e.g. augv2.strong_9
-    #     _, im_aug = args.aug.split('.')
-    #     train_tf = AugV2(training=True, size=args.train_size, im_aug=im_aug)
-    #     val_tf = AugV2(training=False, size=args.eval_size, im_aug=im_aug)
-    # else:
-    #     raise ValueError(f'unsupported augmentation mode {args.aug}')
-
-    # name, split = args.train_data.split('_')
-    # train_dataset = get_datasets(name=name,
-    #                              root=os.path.join(args.data_root, name),
-    #                              split=split,
-    #                              transform=train_tf
-    #                             )
     data_roots = {'SBU_train': './local_data/SBU/SBUTrain4KRecoveredSmall',
                   'SBU_test': './local_data/SBU/SBU-Test',
                   'UCF_test': './local_data/UCF/GouSplit',
@@ -446,10 +416,6 @@ if __name__ == '__main__':
     parser.add_argument('--save_ckpt', type=int, default=1, help='>0 means save ckpt during training.')
 
     ## data
-    # parser.add_argument('--data_root', type=str, default='/mnt/disks/hd2t/Data/RemoteSensing', help='data root')
-    # parser.add_argument('--train_data', type=str, default='LEVIRCDPlus_train', help='training dataset')
-    # parser.add_argument('--eval_data', type=str, default='LEVIRCDPlus_test', help='validation/test dataset')
-    # parser.add_argument('--aug', type=str, default='std', help='data augmentation')
     parser.add_argument('--train_data', type=str, default='SBU_train', help='training dataset')
     parser.add_argument('--eval_data', type=str, default='SBU_test+UCF_test', help='training dataset')
     parser.add_argument('--train_batch', type=int, default=8, help='batch_size for train and val dataloader.')
